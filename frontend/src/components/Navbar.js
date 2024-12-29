@@ -1,16 +1,17 @@
-import { Link } from 'react-router-dom'
+import React from 'react';
 
-const Navbar = () => {
+const Navbar = ({ onLogout, isLoggedIn, isAdmin }) => (
+  <nav>
+    <h1>Family-Friendly Farms</h1>
+    {isLoggedIn ? (
+      <>
+        <button onClick={onLogout}>Logout</button>
+        {isAdmin && <span>Admin</span>}
+      </>
+    ) : (
+      <p>Please log in</p>
+    )}
+  </nav>
+);
 
-  return (
-    <header>
-      <div className="container">
-        <Link to="/">
-          <h1>Family Friendly Farms</h1>
-        </Link>
-      </div>
-    </header>
-  )
-}
-
-export default Navbar
+export default Navbar;
