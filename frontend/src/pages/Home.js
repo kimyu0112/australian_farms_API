@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getFarms, deleteFarm } from '../api/farms';
 import FarmCard from '../components/FarmCard';
+import AuthCard from '../components/AuthCard';
 
-const Home = ({ isAdmin, token }) => {
+const Home = ({ isAdmin, token, setUser, setToken, setIsAdmin }) => {
   const [farms, setFarms] = useState([]);
 
   useEffect(() => {
@@ -16,16 +17,21 @@ const Home = ({ isAdmin, token }) => {
   };
 
   return (
-    <div>
-      <h1>Farms</h1>
-      {farms.map((farm) => (
-        <FarmCard
-          key={farm._id}
-          farm={farm}
-          onDelete={handleDelete}
-          isAdmin={isAdmin}
-        />
-      ))}
+    <div className="home-container">
+      <div className="farm-list">
+        <h1>Farms</h1>
+        {farms.map((farm) => (
+          <FarmCard
+            key={farm._id}
+            farm={farm}
+            onDelete={handleDelete}
+            isAdmin={isAdmin}
+          />
+        ))}
+      </div>
+      <div className="auth-section">
+        <AuthCard setUser={setUser} setToken={setToken} setIsAdmin={setIsAdmin} />
+      </div>
     </div>
   );
 };

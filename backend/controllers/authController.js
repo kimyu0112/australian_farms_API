@@ -12,7 +12,7 @@ exports.login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { username: user.username, isAdmin: user.isAdmin },
+      { username: user.username, email: user.email, isAdmin: user.isAdmin }, // <-- Included email in JWT payload
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -26,14 +26,14 @@ exports.login = async (req, res) => {
 // Sign up a new user
 exports.signup = async (req, res) => {
   try {
-    const { username, password, isAdmin } = req.body;
+    const { username, email, password, isAdmin } = req.body;
 
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
-      return res.status(400).json({ message: 'Username already exists' });
+      return res.status(400).json({ message: 'Username or email already exists' }); // <-- Updated error message
     }
 
-    const newUser = new User({ username, password, isAdmin });
+    const newUser = new User({ username, email, password, isAdmin });
     await newUser.save();
 
     res.status(201).json({ message: 'User created successfully' });
