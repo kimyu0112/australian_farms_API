@@ -4,9 +4,11 @@ import { login, signup } from '../api/auth';
 const AuthCard = ({ setUser, setToken, setIsAdmin }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
+    setErrorMessage('');
   };
 
   const handleSubmit = async (e) => {
@@ -23,13 +25,14 @@ const AuthCard = ({ setUser, setToken, setIsAdmin }) => {
         setIsLoginMode(true);
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'Error occurred!');
+      setErrorMessage(error.response?.data?.message || 'An error occurred.');
     }
   };
 
   return (
     <div className="auth-card">
       <h3>{isLoginMode ? 'Login' : 'Sign Up'}</h3>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         {!isLoginMode && (
           <input
@@ -54,7 +57,7 @@ const AuthCard = ({ setUser, setToken, setIsAdmin }) => {
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
         />
-        <button type="submit">{isLoginMode ? 'Login' : 'Sign Up'}</button>
+        <button className="submit-button" type="submit">{isLoginMode ? 'Login' : 'Sign Up'}</button>
       </form>
       <button className="toggle-mode" onClick={toggleMode}>
         {isLoginMode ? 'Switch to Sign Up' : 'Switch to Login'}
