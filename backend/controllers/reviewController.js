@@ -1,46 +1,42 @@
-const Review = require('../models/reviewModel');
+const Review = require('../models/Review');
 
-// Get all reviews for a farm
+// Fetch reviews for a farm
 exports.getReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ farmId: req.params.farmId });
-    res.json(reviews);
+    res.status(200).json(reviews);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching reviews', error });
+    res.status(500).json({ error: 'Failed to fetch reviews', details: error.message });
   }
 };
 
-// Add a review to a farm (requires authentication)
+// Add a review
 exports.addReview = async (req, res) => {
+  const { comment, rating } = req.body;
+  const user = req.user.username; // Assume this is set by the auth middleware
   try {
-    const { comment, rating } = req.body;
-    const newReview = new Review({
-      user: req.user.username,
-      comment,
-      rating,
-      farmId: req.params.farmId,
-    });
-
-    await newReview.save();
-    res.json(newReview);
+    const review = new Review({ user, comment, rating, farmId: req.params.farmId });
+    await review.save();
+    res.status(201).json(review);
   } catch (error) {
-    res.status(500).json({ message: 'Error adding review', error });
+    res.status(500).json({ error: 'Failed to add review', details: error.message });
   }
 };
 
-// Delete a review (requires authentication or admin access)
+// Delete a review (Admin or Review Owner)
 exports.deleteReview = async (req, res) => {
   try {
     const review = await Review.findById(req.params.reviewId);
     if (!review) return res.status(404).json({ message: 'Review not found' });
 
-    if (review.user !== req.user.username && !req.user.isAdmin) {
-      return res.status(403).json({ message: 'You can only delete your own reviews or require admin access' });
+    // Check if the user is an admin or the owner of the review
+    if (req.user.isAdmin || req.user.username === review.user) {
+      await Review.findByIdAndDelete(req.params.reviewId);
+      return res.status(200).json({ message: 'Review deleted successfully' });
+    } else {
+      return res.status(403).json({ message: 'Access denied. Only the review owner or admins can delete this review.' });
     }
-
-    await Review.findByIdAndDelete(req.params.reviewId);
-    res.json({ message: 'Review deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting review', error });
+    res.status(500).json({ error: 'Failed to delete review', details: error.message });
   }
 };

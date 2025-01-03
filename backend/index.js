@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const seedData = require('./seedData');
 
 dotenv.config();
 connectDB();
@@ -15,9 +16,14 @@ const farmRoutes = require('./routes/farms');
 const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
 
-app.use('/farms', farmRoutes);
-app.use('/farms/:farmId/reviews', reviewRoutes);
-app.use('/auth', authRoutes);
+app.use('/api/farms', farmRoutes);
+app.use('/api/farms/:farmId/reviews', reviewRoutes);
+app.use('/api/auth', authRoutes);
 
-const PORT = process.env.PORT
+// Seed database if in development
+if (process.env.NODE_ENV === 'development') {
+  seedData();
+}
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
