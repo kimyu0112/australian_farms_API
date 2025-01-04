@@ -1,4 +1,4 @@
-const Review = require('../models/Review');
+const Review = require('../models/reviewModel');
 
 // Fetch reviews for a farm
 exports.getReviews = async (req, res) => {
