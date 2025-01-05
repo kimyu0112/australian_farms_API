@@ -1,18 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/FarmCard.css';
 
-const FarmCard = ({ farm, onDelete, isAdmin }) => (
+const FarmCard = ({ farm }) => (
   <div className="farm-card">
-    <h2>{farm.name}</h2>
+    <img src={farm.images[0]} alt={farm.name} className="farm-thumbnail" />
+    <h3>{farm.name}</h3>
     <p>{farm.description}</p>
-    <p><strong>Location:</strong> {farm.location}</p>
-    <div className="card-actions">
-      {isAdmin && (
-        <button className="delete-button" onClick={() => onDelete(farm._id)}>
-          Delete Farm
-        </button>
-      )}
-      <button className="view-details">View Details</button>
-    </div>
+    <Link to={`/farm/${farm._id}`} className="view-details">View Details</Link>
   </div>
 );
 

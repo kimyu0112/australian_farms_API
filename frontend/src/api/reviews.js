@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/farms';
+const API_URL = 'http://localhost:4000/api/farms';
 
 export const getReviews = async (farmId) => axios.get(`${API_URL}/${farmId}/reviews`);
 export const addReview = async (farmId, review, token) => {

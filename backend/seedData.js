@@ -39,7 +39,7 @@ const seedData = async () => {
         location: 'Melbourne, VIC',
         description: 'A beautiful family-friendly farm with open fields and picnic spots.',
         features: ['Petting Zoo', 'Organic Produce', 'Farm Tours'],
-        images: ['https://example.com/sunny-acres.jpg'],
+        images: ['https://i.ibb.co/g7Zzp78/Stock-Cake-Rural-farm-landscape-1735985497.jpg'],
         areaCode: '3000',
       },
       {
@@ -47,7 +47,7 @@ const seedData = async () => {
         location: 'Sydney, NSW',
         description: 'Explore rolling hills and enjoy fresh farm-to-table meals.',
         features: ['Horse Riding', 'Cafe', 'Wildlife'],
-        images: ['https://example.com/green-pastures.jpg'],
+        images: ['https://www.publicdomainpictures.net/pictures/230000/velka/farm-1499693204gQe.jpg'],
         areaCode: '2000',
       },
       {
@@ -55,7 +55,7 @@ const seedData = async () => {
         location: 'Brisbane, QLD',
         description: 'An interactive farm with a focus on sustainable farming practices.',
         features: ['Workshops', 'Eco-Trails', 'Camping'],
-        images: ['https://example.com/blue-ridge.jpg'],
+        images: ['https://www.publicdomainpictures.net/pictures/230000/velka/view-of-mount-hood.jpg'],
         areaCode: '4000',
       },
     ]);
@@ -90,6 +90,6 @@ const seedData = async () => {
   }
 };
 
-seedData();
+// seedData();
 
 module.exports = seedData

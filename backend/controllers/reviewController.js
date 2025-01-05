@@ -11,15 +11,21 @@ exports.getReviews = async (req, res) => {
 };
 
 // Add a review
+const Review = require('../models/reviewModel');
+
 exports.addReview = async (req, res) => {
-  const { comment, rating } = req.body;
-  const user = req.user.username; // Assume this is set by the auth middleware
   try {
-    const review = new Review({ user, comment, rating, farmId: req.params.farmId });
-    await review.save();
-    res.status(201).json(review);
+    const { farmId } = req.params;
+    const { user, comment, rating } = req.body;
+
+    if (!comment || !rating) {
+      return res.status(400).json({ message: 'Comment and rating are required.' });
+    }
+
+    const newReview = await Review.create({ ...req.body, farmId });
+    res.status(201).json(newReview);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to add review', details: error.message });
+    res.status(500).json({ message: 'Failed to add review.', error: error.message });
   }
 };
 

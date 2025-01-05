@@ -1,17 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/Navbar.css';
 
-const Navbar = ({ onLogout, isLoggedIn, isAdmin }) => (
+const Navbar = () => (
   <nav className="navbar">
-    <h1>Family-Friendly Farms</h1>
+    <h1>
+      <Link to="/" className="navbar-brand">Family-Friendly Farms</Link>
+    </h1>
     <div className="nav-links">
-      <a href="/">Home</a>
-      {isAdmin && <a href="/admin">Admin</a>}
+      <Link to="/login" className="nav-link login-button">Log in</Link>
+      <Link to="/signup" className="nav-link signup-button">Sign up</Link>
     </div>
-    {isLoggedIn ? (
-      <button className="logout-button" onClick={onLogout}>Logout</button>
-    ) : (
-      <p>Welcome! Please log in or sign up.</p>
-    )}
   </nav>
 );
 

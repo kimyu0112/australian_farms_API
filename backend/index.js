@@ -21,9 +21,9 @@ app.use('/api/farms/:farmId/reviews', reviewRoutes);
 app.use('/api/auth', authRoutes);
 
 // Seed database if in development
-if (process.env.NODE_ENV === 'development') {
-  seedData();
-}
+// if (process.env.NODE_ENV === 'development') {
+//  seedData();
+// } 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
