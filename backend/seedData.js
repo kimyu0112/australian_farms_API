@@ -2,32 +2,35 @@ const mongoose = require('mongoose');
 const Farm = require('./models/farmModel');
 const Review = require('./models/reviewModel');
 const User = require('./models/userModel');
+const bcrypt = require('bcryptjs');
 
 const seedData = async () => {
   try {
-    // Clear existing data
     await Farm.deleteMany();
     await Review.deleteMany();
     await User.deleteMany();
 
-    // Create sample users
+    // Hash passwords
+    const hashedPassword = await bcrypt.hash('password123', 10);
+    const hashedAdminPass = await bcrypt.hash('adminpass', 10);
+
     const users = await User.insertMany([
       {
         username: 'john_doe',
         email: 'john@example.com',
-        password: 'password123', // Use hashed passwords in a real app
+        password: hashedPassword,
         isAdmin: false,
       },
       {
         username: 'jane_doe',
         email: 'jane@example.com',
-        password: 'password123',
+        password: hashedPassword,
         isAdmin: false,
       },
       {
         username: 'admin_user',
         email: 'admin@example.com',
-        password: 'adminpass',
+        password: hashedAdminPass,
         isAdmin: true,
       },
     ]);

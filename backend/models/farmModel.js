@@ -6,14 +6,7 @@ const FarmSchema = new mongoose.Schema({
   description: { type: String, required: true },
   features: [String],
   images: [String],
-  areaCode: String,
-  reviews: [
-    {
-        user: String,
-        rating: Number,
-        comment: String,
-    }
-  ],
+  areaCode: String
 });
 
 module.exports = mongoose.model('Farm', FarmSchema);
