@@ -8,8 +8,8 @@ const authenticateToken = require('../middlewares/authenticateToken');
 
 const router = express.Router();
 
-router.get('/', getReviews);
-router.post('/', authenticateToken, addReview);
-router.delete('/:reviewId', authenticateToken, deleteReview);
+router.get('/:farmId/reviews', getReviews);
+router.post('/:farmId/reviews', authenticateToken, addReview);
+router.delete('/:farmId/reviews/:reviewId', authenticateToken, deleteReview);
 
 module.exports = router;

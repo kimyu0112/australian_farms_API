@@ -17,7 +17,7 @@ const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
 
 app.use('/api/farms', farmRoutes);
-app.use('/api/farms/:farmId/reviews', reviewRoutes);
+app.use('/api/farms', reviewRoutes);
 app.use('/api/auth', authRoutes);
 
 // Seed database if in development

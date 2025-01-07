@@ -1,15 +1,20 @@
 const Review = require('../models/reviewModel');
+const Farm = require('../models/farmModel')
 
 // Fetch reviews for a farm
 exports.getReviews = async (req, res) => {
+  const { farmId } = req.params; // Extract farmId from URL
   try {
-    const farm = await Farm.findById(req.params.farmId);
-    res.status(200).json(farm.reviews);
+    // Fetch reviews for the specified farm
+    const reviews = await Review.find({ farmId });
+    if (!reviews.length) {
+      return res.status(404).json({ message: 'No reviews found for this farm' });
+    }
+    res.status(200).json(reviews);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'Failed to fetch reviews', error: error.message });
   }
 };
-
 // Add a review
 exports.addReview = async (req, res) => {
   try {
