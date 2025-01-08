@@ -20,7 +20,6 @@ app.use('/api/farms', farmRoutes);
 app.use('/api/farms', reviewRoutes);
 app.use('/api/auth', authRoutes);
 
-// Seed database if in development
 // if (process.env.NODE_ENV === 'development') {
 //  seedData();
 // } 

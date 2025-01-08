@@ -1,0 +1,27 @@
+meta {
+  name: Create one farm
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:4000/api/farms
+  body: json
+  auth: apikey
+}
+
+auth:apikey {
+  key: authorization
+  value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2U3MjJjMDcxNDA2OTIzOTFmOTc2OSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTczNjM0MTIyOCwiZXhwIjoxNzM2NDI3NjI4fQ.Fkh2neCSr69oQ-PCLBD2FUHpwkFBXHHlYQ6jQjgW9K0
+  placement: header
+}
+
+body:json {
+  {
+    "name": "Sample Farm",
+    "location": "Sample Location",
+    "description": "A family-friendly farm.",
+    "features": ["Playground", "Petting Zoo"],
+    "images": ["https://example.com/image.jpg"]
+  }
+}
