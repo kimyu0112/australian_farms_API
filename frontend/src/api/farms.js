@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/api/farms';
+const API_URL = 'https://australian-farms-mern-app.onrender.com/api/farms';
 
 export const getFarms = async () => axios.get(API_URL);
 export const getFarmById = async (id) => axios.get(`${API_URL}/${id}`);
